@@ -9,3 +9,7 @@ vendor
 
 # ignore built gems
 pkg
+
+# ignore direnv hints
+.envrc
+.direnv
