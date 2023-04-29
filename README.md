@@ -6,15 +6,16 @@
 
 Configuration behavior is merge behavior of directories in top/down order listed.
 
-* /opt/share/stitches.<ext>
-* /etc/stitches/stitches.<ext>
-* /etc/stitches/conf.d/*.<ext>
-* $XDG_CONFIG_HOME/stitches/stitches.<ext>
-* $XDG_CONFIG_HOME/stitches/conf.d/*.<ext>
-* stitches.<ext>
-* stitches/config.d/*.<ext>
-* .stitches.<ext>
-* .stitches/config.d/*.<ext>
+- /opt/share/stitches.<ext>
+- /etc/stitches/stitches.<ext>
+- /etc/stitches/conf.d/\*.<ext>
+- $XDG_CONFIG_HOME/stitches/stitches.<ext>
+- $XDG_CONFIG_HOME/stitches/conf.d/\*.<ext>
+- stitches.<ext>
+- stitches/config.d/\*.<ext>
+- .stitches.<ext>
+- .stitches/config.d/\*.<ext>
+- StitchFile
 
 obs.
 
@@ -24,7 +25,7 @@ obs.
 
 Top level structure is a namespace
 
-namespaces can receive terraform commands 
+namespaces can receive terraform commands
 namespaces have multiple projects within them
 projects represent a single instance of state
 projects can have multiple modules.
