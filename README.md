@@ -1,4 +1,4 @@
-# stitches-cli
+# stitches
 
 ## Configuration
 

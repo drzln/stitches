@@ -5,12 +5,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require_relative %(./lib/stitches/cli/version)
 
 Gem::Specification.new do |spec|
-  spec.name                  = %(stitches-cli)
+  spec.name                  = %(stitches)
   spec.version               = Stitches::Cli::VERSION
   spec.authors               = [%(t3rro)]
-  spec.email                 = [%()]
-  spec.description           = %(control declarative systems)
-  spec.summary               = %(control declarative systems)
+  spec.email                 = [%(t3rro@proton.me)]
+  spec.description           = %(control rest apis declaratively with ruby)
+  spec.summary               = %(control rest apis declaratively with ruby)
   spec.homepage              = %(https://github.com/t3rro/#{spec.name})
   spec.license               = %(IPA)
   spec.files                 = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
