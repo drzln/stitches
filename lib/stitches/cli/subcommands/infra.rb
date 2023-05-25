@@ -7,8 +7,15 @@ class InfraCommand < StitchesCommand
     command %(infra)
   end
 
+  argument :target do
+    desc %(target like namespace.site.project)
+  end
+
   def run(argv)
     parse(argv)
+
+    raise NoInfraTargetError unless params[:target]
+
     print help
     exit
   end
