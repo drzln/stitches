@@ -17,7 +17,9 @@ group :production do
   %w[
     stitches-terraform-synthesizer
     stitches-synthesizer
+    tty-progressbar
     tty-option
+    tty-table
     toml-rb
   ].each do |this_gem|
     gem this_gem
