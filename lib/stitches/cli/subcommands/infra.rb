@@ -26,6 +26,14 @@ class InfraCommand < StitchesCommand
     puts '# args'
     puts argv
     puts '# end args'
+    cfg_synth = Config.resolve_configurations(
+      ignore_default_paths: true,
+      extra_paths: [
+        %(../../../../example/config/sample.rb)
+      ]
+    )
+
+    puts cfg_synth
 
     check_run
 
