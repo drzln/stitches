@@ -22,6 +22,10 @@ class InfraCommand < StitchesCommand
   def run(argv)
     parse(argv)
 
+    puts '# args'
+    puts argv
+    puts '# end args'
+
     check_run
 
     # print help
