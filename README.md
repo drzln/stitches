@@ -1,4 +1,3 @@
-
 # stitches
 
 ## Configuration
@@ -47,3 +46,14 @@ namespaces are also runnable
 
 flows are groups of runnable terraform commands in a DAG
 whose nodes are either namespace or namespace.project
+
+#### Namespace
+
+namespace is a DAG with fixed nodes
+
+```
+namespace -> site -> project
+```
+
+a project is the smallest component which can receive tf commands
+called like namespace.site.project
