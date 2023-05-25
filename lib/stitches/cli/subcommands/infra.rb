@@ -1,4 +1,5 @@
 require_relative %(./stitches)
+require_relative %(../config)
 require_relative %(../../errors/no_infra_target_error)
 require_relative %(../../errors/incorrect_subcommand_error)
 
