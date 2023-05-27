@@ -1,5 +1,5 @@
 require %(stitches/synthesizer/abstract)
-require %(stitches/cli/constants)
+require_relative %(../cli/constants)
 require %(toml-rb)
 require %(json)
 require %(yaml)

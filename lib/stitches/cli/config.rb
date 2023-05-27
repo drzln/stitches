@@ -1,5 +1,5 @@
-require %(stitches/synthesizer/config)
-require %(stitches/cli/constants)
+require_relative %(../synthesizer/config)
+require_relative %(./constants)
 
 module Config
   class << self
