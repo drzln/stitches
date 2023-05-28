@@ -1,9 +1,17 @@
 require_relative %(./stitches)
 require_relative %(../../cli/config)
 require_relative %(../../errors/namespace_not_found_error)
+require_relative %(../../errors/site_not_found_error)
+require_relative %(../../errors/project_not_found_error)
 require_relative %(../../errors/no_infra_target_error)
 require_relative %(../../errors/incorrect_subcommand_error)
 require_relative %(../../say/init)
+
+class Symbol
+  def with(*args, &block)
+    ->(caller, *rest) { caller.send(self, *args, *rest, &block) }
+  end
+end
 
 class InfraCommand < StitchesCommand
   NAME = :infra
@@ -63,6 +71,25 @@ class InfraCommand < StitchesCommand
     runtype     = nil
 
     raise NamespaceNotFoundError unless namespaces.include?(targets[0])
+
+    namespaces.each do |ns_name|
+      sites = config[:namespace][ns_name][:sites]
+
+      raise SiteNotFoundError unless sites
+                                     .map(&:[])
+                                     .with(:name)
+                                     .map(&:to_s)
+                                     .include?(targets[1].to_s)
+
+      projects = config[:namespace][ns_name][:projects]
+
+      raise ProjectNotFoundError unless projects
+                                        .map(&:[])
+                                        .with(:name)
+                                        .map(&:to_s)
+                                        .include?(targets[2].to_s)
+    end
+    raise SiteNotFoundError unless config[:namespace][targets[1].to_sym]
   end
 
   def check_run
