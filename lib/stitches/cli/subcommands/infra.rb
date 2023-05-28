@@ -22,16 +22,23 @@ class InfraCommand < StitchesCommand
 
   def run(argv)
     parse(argv)
+    puts params
 
-    puts '# args'
-    puts argv
-    puts '# end args'
-    cfg_synth = Config.resolve_configurations(
-      ignore_default_paths: true,
-      extra_paths: [
-        %(../../../../example/config/sample.rb)
-      ]
-    )
+    cfg_synth = Config.resolve_configurations
+
+    # SNIPPET: example of how to load a config file
+    # SNIPPET: for testing
+    # cfg_synth = Config.resolve_configurations(
+    #   ignore_default_paths: true,
+    #   extra_paths: [
+    #     %(example/config/sample.rb)
+    #   ]
+    # )
+
+    if cfg_synth.empty?
+      puts 'configuration empty, exiting...'
+      exit 0
+    end
 
     puts cfg_synth
 
