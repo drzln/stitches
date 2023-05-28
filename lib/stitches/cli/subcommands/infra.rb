@@ -42,30 +42,27 @@ class InfraCommand < StitchesCommand
     end
 
     check_run
-    check_target
+    check_target(params[:target], cfg_synth)
     puts params
     puts cfg_synth
 
     exit
   end
 
+  private
+
   # targets can be...
   # ${namespace}
   # ${namespace}.${site}
   # ${namespace}.${site}.${project}
   def check_target(target, config)
-    targets     = target.split('.')
-    namespaces  = config[:namespace].keys
-    runtype     = None
+    raise NamespaceNotFoundError if target.nil?
+
+    targets     = target.split('.').map(&:to_s)
+    namespaces  = config[:namespace].keys.map(&:to_s)
+    runtype     = nil
 
     raise NamespaceNotFoundError unless namespaces.include?(targets[0])
-  end
-
-  private
-
-  # represent the app_config to the local structure
-  def app_config
-    nil
   end
 
   def check_run
