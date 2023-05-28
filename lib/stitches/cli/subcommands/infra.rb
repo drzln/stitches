@@ -1,5 +1,6 @@
 require_relative %(./stitches)
 require_relative %(../../cli/config)
+require_relative %(../../errors/namespace_not_found_error)
 require_relative %(../../errors/no_infra_target_error)
 require_relative %(../../errors/incorrect_subcommand_error)
 require_relative %(../../say/init)
@@ -41,9 +42,23 @@ class InfraCommand < StitchesCommand
     end
 
     check_run
+    check_target
+    puts params
     puts cfg_synth
 
     exit
+  end
+
+  # targets can be...
+  # ${namespace}
+  # ${namespace}.${site}
+  # ${namespace}.${site}.${project}
+  def check_target(target, config)
+    targets     = target.split('.')
+    namespaces  = config[:namespace].keys
+    runtype     = None
+
+    raise NamespaceNotFoundError unless namespaces.include?(targets[0])
   end
 
   private
