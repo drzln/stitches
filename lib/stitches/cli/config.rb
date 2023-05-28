@@ -10,7 +10,7 @@ module Config
     end
 
     def xdg_config_home
-      ENV.fetch(%(XDG_CONFIG_HOME), %(~/.config))
+      ENV.fetch(%(XDG_CONFIG_HOME), %(#{ENV.fetch('HOME', nil)}/.config))
     end
 
     # return array of paths that can store a configuration
@@ -34,25 +34,15 @@ module Config
         )
       end
 
-      # reorganize so files are read in correctly
       res = []
       EXTENSIONS.each do |ext|
         files = p[ext]
         files.each do |file|
-          res << file
+          res << file if File.exist?(file)
         end
       end
-      puts res
-      # (0..EXTENSIONS.length).each do |n|
-      #   EXTENSIONS.each do |ext|
-      #     res << p[ext][n]
-      #   end
-      # end
 
-      # remove rogue nils from globbing things that may not ext
-      res = res.compact
-      # remove any file paths that do not exist
-      res.filter { |path| File.exist?(path) }
+      res
     end
 
     # read file paths and run configuration parsers
