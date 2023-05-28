@@ -404,6 +404,17 @@
     };
     version = "2.2.0";
   };
+  tty-box = {
+    dependencies = ["pastel" "strings" "tty-cursor"];
+    groups = ["production"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "12yzhl3s165fl8pkfln6mi6mfy3vg7p63r3dvcgqfhyzq6h57x0p";
+      type = "gem";
+    };
+    version = "0.7.0";
+  };
   tty-color = {
     groups = ["default" "production"];
     platforms = [];

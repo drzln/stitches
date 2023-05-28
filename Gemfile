@@ -20,6 +20,7 @@ group :production do
     tty-progressbar
     tty-option
     tty-table
+    tty-box
     toml-rb
   ].each do |this_gem|
     gem this_gem

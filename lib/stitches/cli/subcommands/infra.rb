@@ -2,6 +2,7 @@ require_relative %(./stitches)
 require_relative %(../../cli/config)
 require_relative %(../../errors/no_infra_target_error)
 require_relative %(../../errors/incorrect_subcommand_error)
+require_relative %(../../say/init)
 
 class InfraCommand < StitchesCommand
   NAME = :infra
@@ -36,7 +37,7 @@ class InfraCommand < StitchesCommand
     # )
 
     if cfg_synth.empty?
-      puts 'configuration empty, exiting...'
+      Say.terminal 'configuration empty, exiting...'
       exit 0
     end
 

@@ -84,6 +84,10 @@ GEM
     tilt (2.1.0)
     toml-rb (2.2.0)
       citrus (~> 3.0, > 3.0)
+    tty-box (0.7.0)
+      pastel (~> 0.8)
+      strings (~> 0.2.0)
+      tty-cursor (~> 0.7)
     tty-color (0.6.0)
     tty-cursor (0.7.1)
     tty-option (0.2.0)
@@ -113,6 +117,7 @@ DEPENDENCIES
   stitches-synthesizer
   stitches-terraform-synthesizer
   toml-rb
+  tty-box
   tty-option
   tty-progressbar
   tty-table
