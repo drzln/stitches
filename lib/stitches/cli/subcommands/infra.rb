@@ -37,7 +37,7 @@ class InfraCommand < StitchesCommand
 
     if cfg_synth.empty?
       Say.terminal 'configuration empty, exiting...'
-      exit 0
+      exit
     end
 
     check_run

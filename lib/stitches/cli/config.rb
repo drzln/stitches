@@ -19,7 +19,7 @@ module Config
 
       EXTENSIONS.each do |ext|
         p[ext] = [] unless p[ext]
-        p[ext] << File.join(%(opt), %(share), %(stitches.#{ext}))
+        p[ext] << File.join(%(/opt), %(share), %(stitches.#{ext}))
         p[ext] << File.join(%(/etc), %(stitches), %(stitches.#{ext}))
         p[ext].concat(
           Dir.glob(
@@ -36,16 +36,23 @@ module Config
 
       # reorganize so files are read in correctly
       res = []
-      (0..EXTENSIONS.length).each do |n|
-        EXTENSIONS.each do |ext|
-          res << p[ext][n]
+      EXTENSIONS.each do |ext|
+        files = p[ext]
+        files.each do |file|
+          res << file
         end
       end
+      puts res
+      # (0..EXTENSIONS.length).each do |n|
+      #   EXTENSIONS.each do |ext|
+      #     res << p[ext][n]
+      #   end
+      # end
 
       # remove rogue nils from globbing things that may not ext
       res = res.compact
       # remove any file paths that do not exist
-      res = res.filter { |path| File.exist?(path) }
+      res.filter { |path| File.exist?(path) }
     end
 
     # read file paths and run configuration parsers
