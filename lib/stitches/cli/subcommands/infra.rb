@@ -23,7 +23,6 @@ class InfraCommand < StitchesCommand
 
   def run(argv)
     parse(argv)
-    puts params
 
     cfg_synth = Config.resolve_configurations
 
@@ -41,11 +40,9 @@ class InfraCommand < StitchesCommand
       exit 0
     end
 
+    check_run
     puts cfg_synth
 
-    check_run
-
-    # print help
     exit
   end
 
