@@ -5,14 +5,10 @@ module Say
     def terminal(msg)
       box = TTY::Box.frame(
         width: msg.length + 4,
-        align: :center,
+        align: :left,
         border: :thick,
         padding: 0,
-        height: 1,
-        style: {
-          fg: :green,
-          bg: :blue
-        }
+        height: 1
       )
       puts box + "\n"
       puts "  #{msg}  "
