@@ -118,6 +118,7 @@ DEPENDENCIES
   stitches-terraform-synthesizer
   toml-rb
   tty-box
+  tty-color
   tty-option
   tty-progressbar
   tty-table
