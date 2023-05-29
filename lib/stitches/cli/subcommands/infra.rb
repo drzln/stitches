@@ -51,6 +51,13 @@ class InfraCommand < StitchesCommand
 
   # process stage for target
   def process_target(targets, cfg_synth)
+    namespaces    = cfg_synth[:namespace].keys.map(&:to_sym)
+    environments  = []
+
+    namespaces.each do |ns_name|
+      environments.concat(cfg_synth[:namespace][ns_name].keys.map(&:to_sym))
+    end
+
     case targets.length.to_i
       # only provided namespace
     when 1
@@ -61,6 +68,13 @@ class InfraCommand < StitchesCommand
       # only provided namespace.site.project
     when 3
       announce_preflight_info(targets, cfg_synth)
+      environments.each do |e_name|
+        project_data = cfg_synth[:namespace][targets[0]][e_name][:projects]
+        case project_data[:src][:type].to_sym
+        when :local
+        when :git
+        end
+      end
 
       # fetch project data
       # projet_data = cfg_synth[:namespace][targets[0]]

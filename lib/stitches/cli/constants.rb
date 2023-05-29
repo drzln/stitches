@@ -1,5 +1,13 @@
 module Constants
-  PROJECT_VERSION = %i[version.rb]
+  # cli related constants
+  CACHE_DIR = File.join(
+    ENV.fetch(%(HOME), nil),
+    %(.cache),
+    %(stitches)
+  ).freeze
+
+  # project related constants
+  PROJECT_VERSION = %i[version.rb].freeze
   PROJECT_SRC_FOLDERS = %i[
     lib
     pre
