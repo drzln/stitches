@@ -32,7 +32,7 @@ class InfraCommand < StitchesCommand
 
     # reject empty configurations
     if cfg_synth.empty?
-      Say.terminal 'configuration empty, exiting...'
+      Say.terminal %(configuration empty, exiting...)
       exit
     end
 
@@ -40,8 +40,8 @@ class InfraCommand < StitchesCommand
     check_run
     check_target(params[:target], cfg_synth)
 
-    puts params
-    puts cfg_synth
+    puts params.to_s
+    puts cfg_synth.to_s
 
     exit
   end
