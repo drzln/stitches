@@ -5,7 +5,7 @@ module Say
   class << self
     def terminal(msg)
       spec = {
-        width: msg.length + 4,
+        width: 80,
         style: {
           fg: :yellow,
           bg: :blue,
