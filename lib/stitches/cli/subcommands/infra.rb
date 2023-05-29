@@ -140,7 +140,9 @@ class InfraCommand < StitchesCommand
         end
 
         raise ProjectNotFoundError unless project_names
-                                          .include?(targets[2].to_sym)
+                                          .include?(
+                                            targets[2].to_sym
+                                          )
       end
     end
   end
