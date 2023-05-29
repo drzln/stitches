@@ -8,7 +8,7 @@ module Constants
 
   # project related constants
   PROJECT_VERSION = %i[version.rb].freeze
-  PROJECT_SRC_FOLDERS = %i[
+  PROJECT_SRC_DIRS = %i[
     lib
     pre
     post

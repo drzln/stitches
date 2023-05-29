@@ -1,4 +1,5 @@
 require_relative %(./stitches)
+require_relative %(../../cli/constants)
 require_relative %(../../cli/config)
 require_relative %(../../errors/namespace_not_found_error)
 require_relative %(../../errors/site_not_found_error)
@@ -7,7 +8,11 @@ require_relative %(../../errors/no_infra_target_error)
 require_relative %(../../errors/incorrect_subcommand_error)
 require_relative %(../../say/init)
 
+require %(stitches/synthesizer/terraform)
+require %(json)
+
 class InfraCommand < StitchesCommand
+  include Constants
   NAME = :infra
 
   usage do
@@ -69,16 +74,47 @@ class InfraCommand < StitchesCommand
     when 3
       announce_preflight_info(targets, cfg_synth)
       environments.each do |e_name|
-        project_data = cfg_synth[:namespace][targets[0]][e_name][:projects]
-        case project_data[:src][:type].to_sym
-        when :local
-        when :git
+        projects = cfg_synth[:namespace][targets[0]][e_name][:projects]
+        projects.each do |project|
+          announce_project(project)
+
+          synth = TerraformSynthesizer.new
+          case project[:src][:type].to_sym
+          when :local
+            system %(mkdir -p #{CACHE_DIR}) unless Dir.exist?(CACHE_DIR)
+            PROJECT_SRC_DIRS.each do |src_dir|
+              if File.exist?(File.join(
+                project[:src][:location].to_s,
+                %(src),
+                src_dir.to_s
+              ))
+                stitch_files = Dir.glob("#{File.join(
+                  project[:src][:location].to_s,
+                  %(src),
+                  src_dir.to_s
+                )}/**/*.rb")
+                stitch_files.each do |stitch_file|
+                  synth.synthesize(File.read(stitch_file))
+                end
+              end
+            end
+            Say.terminal JSON.pretty_generate(synth.synthesis)
+          when :git
+            nil
+          end
         end
       end
 
       # fetch project data
       # projet_data = cfg_synth[:namespace][targets[0]]
     end
+  end
+
+  def announce_project(project)
+    msg = []
+    msg << %(project: #{project[:name]})
+    msg << %(src:     #{project[:src]})
+    Say.terminal msg.map(&:strip).join(%(\n))
   end
 
   def announce_preflight_info(targets, cfg_synth)
@@ -139,10 +175,11 @@ class InfraCommand < StitchesCommand
           project_names << project[:name]
         end
 
-        raise ProjectNotFoundError unless project_names
-                                          .include?(
-                                            targets[2].to_sym
-                                          )
+        raise ProjectNotFoundError \
+        unless project_names
+               .include?(
+                 targets[2].to_sym
+               )
       end
     end
   end
