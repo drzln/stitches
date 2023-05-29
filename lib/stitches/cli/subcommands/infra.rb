@@ -98,7 +98,16 @@ class InfraCommand < StitchesCommand
                 end
               end
             end
+
             Say.terminal JSON.pretty_generate(synth.synthesis)
+
+            project_cache_dir = File.join(CACHE_DIR, project[:name].to_s)
+
+            system %(mkdir -p #{project_cache_dir}) unless Dir.exist?(project_cache_dir)
+            File.write(File.join(project_cache_dir, ARTIFACT_FILE), synth.synthesis.to_json)
+            system %(cd #{project_cache_dir} && terraform init)
+            system %(cd #{project_cache_dir} && terraform plan)
+
           when :git
             nil
           end
