@@ -20,7 +20,7 @@ module Say
       box = TTY::Box.frame(**spec)
 
       puts box + "\n"
-      puts "  #{msg}  "
+      puts msg.strip
       puts "\n" + box
     end
   end

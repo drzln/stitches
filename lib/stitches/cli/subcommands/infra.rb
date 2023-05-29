@@ -40,13 +40,50 @@ class InfraCommand < StitchesCommand
     check_run
     check_target(params[:target], cfg_synth)
 
-    puts params.to_s
-    puts cfg_synth.to_s
+    targets = params[:target].split('.').map(&:to_sym)
+    process_target(targets, cfg_synth)
 
+    # provide some kind of default exit of the command execution
     exit
   end
 
   private
+
+  # process stage for target
+  def process_target(targets, cfg_synth)
+    case targets.length.to_i
+      # only provided namespace
+    when 1
+      nil
+      # only provided namespace.site
+    when 2
+      nil
+      # only provided namespace.site.project
+    when 3
+      announce_preflight_info(targets, cfg_synth)
+
+      # fetch project data
+      # projet_data = cfg_synth[:namespace][targets[0]]
+    end
+  end
+
+  def announce_preflight_info(targets, cfg_synth)
+    namespaces    = cfg_synth[:namespace].keys.map(&:to_sym)
+    environments  = []
+
+    namespaces.each do |ns_name|
+      environments.concat(cfg_synth[:namespace][ns_name].keys.map(&:to_sym))
+    end
+
+    preflight_info = []
+    preflight_info << %(environments: #{environments})
+    preflight_info << %(\n)
+    preflight_info << %(namespace: #{targets[0]})
+    preflight_info << %(site:      #{targets[1]})
+    preflight_info << %(project:   #{targets[2]})
+
+    Say.terminal preflight_info.map(&:strip).join(%(\n))
+  end
 
   # targets can be...
   # ${namespace}
@@ -88,13 +125,16 @@ class InfraCommand < StitchesCommand
           project_names << project[:name]
         end
 
-        raise ProjectNotFoundError unless project_names.include?(targets[2].to_sym)
+        raise ProjectNotFoundError unless project_names
+                                          .include?(targets[2].to_sym)
       end
     end
   end
 
   def check_run
-    raise IncorrectSubcommandError unless correct_subcommand?(params[:subcommand])
+    raise IncorrectSubcommandError unless correct_subcommand?(
+      params[:subcommand]
+    )
     raise NoInfraTargetError unless params[:target]
   end
 
